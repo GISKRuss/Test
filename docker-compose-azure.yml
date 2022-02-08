@@ -1,0 +1,10 @@
+version: '3.4'
+
+services:
+  geoserver:
+    image: gisregistry.azurecr.io/geoserver:1.0
+    volumes:
+      - ${WEBAPP_STORAGE_HOME}/geoserver_data:/opt/geoserver/data_dir
+    ports:
+      - "80:8080"
+    restart: always

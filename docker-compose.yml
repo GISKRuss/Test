@@ -1,0 +1,38 @@
+version: '3.4'
+
+x-geoserver-vars: &geoserver-vars
+  GEOSERVER_CORS: 0
+
+services:
+  geoserver:
+    build: 
+      context: .
+      dockerfile: ./Dockerfile.geoserver
+    environment: 
+      <<: *geoserver-vars
+    volumes:
+      - geoserver_data:/opt/geoserver/data_dir
+    ports:
+      - "8080:8080"
+    networks:
+      - geoservice_network
+    restart: unless-stopped
+
+  nginx:
+    image: nginx:alpine
+    depends_on:
+      - geoserver
+    ports:
+      - 80:80
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+    networks:
+      - geoservice_network
+    restart: unless-stopped
+
+networks:
+  geoservice_network:
+    name: geoservice_network
+
+volumes:
+  geoserver_data:

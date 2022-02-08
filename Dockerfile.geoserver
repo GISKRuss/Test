@@ -1,0 +1,7 @@
+FROM kartoza/geoserver:2.20.0
+ENV STABLE_EXTENSIONS=sqlserver-plugin
+ENV GEOSERVER_ADMIN_USER=geoadmin
+ENV GEOSERVER_ADMIN_PASSWORD=Geoserver123
+ENV TOMCAT_EXTRAS=false
+EXPOSE 8080
+COPY index.jsp /usr/local/tomcat/webapps/ROOT/
